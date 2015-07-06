@@ -147,7 +147,7 @@ var Chat = {
 		this.secretKey = secretKey || this.secretKey;
 		this.messagesCount = 0;
 		this.maxMessagesCount = 15;
-		this.host = "test.dev";
+		this.host = window.location.hostname;
 		this.isFocused = true;
 
 		if( !this.chatId || !this.secretKey )
