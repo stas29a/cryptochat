@@ -41,6 +41,12 @@ public class Crypto implements IChat {
     public void onMessage(WebSocket webSocket, String s) {
         JSONObject obj = new JSONObject(s);
 
+        if(obj == null) {
+            System.out.println("Bad json given");
+            System.out.println(s);
+            return;
+        }
+
         if(!obj.isNull("command"))
         {
             System.out.println("Got a new command: " + obj.getString("command"));
