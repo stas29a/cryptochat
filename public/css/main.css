@@ -1,0 +1,57 @@
+body {
+	background-color: black;
+}
+html { 
+	overflow:  hidden; 
+}		
+.main {
+	width: 800px;
+	height: 90%;
+}
+.message {
+	margin-top: 5px;
+	color: rgb(103, 226, 103);
+	font-size: 20px;
+	font-family: 'Play', monospace;
+	text-align: left;
+}
+.system {
+	
+}
+.input {
+	max-width: 100%;
+	position: fixed;
+	bottom: 10px;
+}
+.current-message {
+	float: left;
+	display: inline-block;
+	white-space: pre;
+	color: rgb(103, 226, 103);
+	width: 800px;
+	font-size: 20px;
+	font-family: 'Play', monospace;
+	text-align: left;
+	background-color: black;
+	border: none;
+	outline: none;
+}
+.header {
+	font-family: 'Play', monospace;
+	font-size: 36px;			
+	color: rgb(103, 226, 103);
+}
+.detail {
+	font-size: 10px;
+	font-family: 'Play', monospace;
+	color: rgb(103, 226, 103);	
+	border: 1px solid rgb(103, 226, 103);
+	margin-top: 5px;
+	padding: 5px;
+	width: 200px;
+}
+.detail .description {
+	width: 50px;
+	float: left;
+	margin-left: 10px;
+}

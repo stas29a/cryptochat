@@ -1,0 +1,54 @@
+<html>
+	<head>
+		<title>CryptoChat</title>
+		<script type="text/javascript" src='/js/jquery.js'></script>
+		<script type="text/javascript" src='/js/chat.js'></script>
+		<script type="text/javascript" src='/js/rabbit.js'></script>
+		<link href='http://fonts.googleapis.com/css?family=Play' rel='stylesheet' type='text/css'>
+		<link href='/css/main.css' rel='stylesheet' type='text/css'>
+	</head>	
+	<body>
+		<div class='header'>CryptoChat <sup style='font-size: 12px;'>[ beta ]</sup></div>
+		<div class='detail'>
+			<div class='description'>Chat id:</div><div class='description' id='chat_id'>test</div>				 
+			<div style='clear:both;'></div>
+
+			<div class='description'>Secret key:</div><div class='description' id='secret_key'>*****st</div>				 
+			<div style='clear:both;'></div>
+			
+			<div class='description'>Connection:</div><div class='description' id='connection'> Opened</div>
+			<div style='clear:both;'></div>
+		</div>	
+		<div class='main'>
+			<div class='messages'></div>
+			<div class='input'>
+				<input type='text' class='current-message'>
+			</div>
+		</div>
+		<script type="text/javascript">
+			Chat.init('test', 'test');
+
+			$('.current-message').keydown(function(e){
+				var currentMessage = $('.current-message').val();
+
+				if( e.keyCode == 13 )
+				{
+					Chat.sendMessage( currentMessage );
+					$('.current-message').val('');
+				}
+
+				Chat.isFocused = true;
+			});
+
+			$('.current-message').blur(function(){
+				setTimeout(function(){ 
+					$('.current-message').focus(); 					
+				}, 50);
+			}).trigger('blur');
+
+		</script>
+		<audio id='notify'>
+			<source src="/notify.mp3"></source>
+		</audio>
+	</body>
+</html>
