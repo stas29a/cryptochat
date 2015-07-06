@@ -13,7 +13,7 @@ public class App
 {
     public static void main( String[] args )
     {
-        InetSocketAddress adr = new InetSocketAddress(8080);
+        InetSocketAddress adr = new InetSocketAddress(7777);
         WebSocketServer webSocketServer = new com.stas29a.CryptoChat.components.WebSocketServer(adr, new Crypto());
         System.out.println("Starting chat server..");
         webSocketServer.start();

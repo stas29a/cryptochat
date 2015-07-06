@@ -156,7 +156,7 @@ var Chat = {
 			return false;
 		}			
 
-		Sender.init("ws://"+ this.host +":8080", {
+		Sender.init("ws://"+ this.host +":7777", {
 			onConnectionOpen: function(){
 				console.log('Connection opened ' + Sender.socket.readyState );
 				$('#connection').html('Opened');
