@@ -203,6 +203,7 @@ var Chat = {
 		if( data.message )
 		{
 			var message = this.decryptMessage( data.message);
+			message = message.replace(/<\/?[^>]+>/gi, '');
 			this.addMessage(message);
 			$('#notify')[0].play();
 			this.isFocused = false;			
