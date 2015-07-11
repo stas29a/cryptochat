@@ -39,33 +39,38 @@ public class Crypto implements IChat {
 
     @Override
     public void onMessage(WebSocket webSocket, String s) {
-        JSONObject obj = new JSONObject(s);
+        System.out.println("Got a new message " + s);
+        try {
+            JSONObject obj = new JSONObject(s);
 
-        if(obj == null) {
-            System.out.println("Bad json given");
-            System.out.println(s);
-            return;
+            if (obj == null) {
+                System.out.println("Bad json given");
+                System.out.println(s);
+                return;
+            }
+
+            if (!obj.isNull("command")) {
+                System.out.println("Got a new command: " + obj.getString("command"));
+                runCommand(obj.getString("command"), obj, webSocket);
+                return;
+            }
+
+            if (!obj.isNull("message")) {
+                System.out.println("Got a new message: " + obj.getString("message"));
+                String chatId = connectionToChat.get(webSocket);
+                sendMessage(chatId, obj.getString("message"), webSocket);
+                return;
+            }
         }
-
-        if(!obj.isNull("command"))
+        catch (Throwable e)
         {
-            System.out.println("Got a new command: " + obj.getString("command"));
-            runCommand(obj.getString("command"), obj, webSocket);
-            return;
-        }
-
-        if(!obj.isNull("message"))
-        {
-            System.out.println("Got a new message: " + obj.getString("message"));
-            String chatId = connectionToChat.get(webSocket);
-            sendMessage(chatId, obj.getString("message"), webSocket);
-            return;
+            System.out.println("Somethig going wrong, " + e);
         }
     }
 
     @Override
     public void onError(WebSocket webSocket, Exception e) {
-        System.out.println("Exception " + e);
+        System.out.println("Exception " + e.getStackTrace());
     }
 
     protected void sendSysMessage(String chatId, String msg, WebSocket excludeUser)
@@ -85,7 +90,7 @@ public class Crypto implements IChat {
 
     protected void sendToAll(String chatId, String msg, WebSocket excludeUser)
     {
-        System.out.println("Send to all con in chat: " + chatId);
+        System.out.println("Send to all connections in chat " + chatId);
         ArrayList<WebSocket> chatConnections = this.chats.get(chatId);
 
         if(chatConnections == null)
