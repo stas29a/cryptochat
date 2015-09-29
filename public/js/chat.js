@@ -172,6 +172,8 @@ var Chat = {
 				$('#connection').html('Closed');
 			}
 		});
+
+		Notification.requestPermission( function(result) { currentPermission = result  } );
 	},
 
 	sendMessage: function(currentMessage){
@@ -208,6 +210,8 @@ var Chat = {
 			$('#notify')[0].play();
 			this.isFocused = false;			
 			this.flashingTitle();
+
+			var notification = new Notification('New message', {'body': "You have got a new message at crypto chat"});
 			return;
 		}
 
