@@ -1,37 +1,41 @@
 var JsonFormatter = {
-        stringify: function (cipherParams) {
-            
-            var jsonObj = {
-                ct: cipherParams.ciphertext.toString(CryptoJS.enc.Base64)
-            };
+	stringify: function (cipherParams) {
+		// create json object with ciphertext
+		var jsonObj = {
+			ct: cipherParams.ciphertext.toString(CryptoJS.enc.Base64)
+		};
 
-            if (cipherParams.iv) {
-                jsonObj.iv = cipherParams.iv.toString();
-            }
-            if (cipherParams.salt) {
-                jsonObj.s = cipherParams.salt.toString();
-            }
+		// optionally add iv and salt
+		if (cipherParams.iv) {
+			jsonObj.iv = cipherParams.iv.toString();
+		}
+		if (cipherParams.salt) {
+			jsonObj.s = cipherParams.salt.toString();
+		}
 
-            return JSON.stringify(jsonObj);
-        },
+		// stringify json object
+		return JSON.stringify(jsonObj);
+	},
 
-        parse: function (jsonStr) {
-            
-            var jsonObj = JSON.parse(jsonStr);
+	parse: function (jsonStr) {
+		// parse json string
+		var jsonObj = JSON.parse(jsonStr);
 
-            var cipherParams = CryptoJS.lib.CipherParams.create({
-                ciphertext: CryptoJS.enc.Base64.parse(jsonObj.ct)
-            });
+		// extract ciphertext from json object, and create cipher params object
+		var cipherParams = CryptoJS.lib.CipherParams.create({
+			ciphertext: CryptoJS.enc.Base64.parse(jsonObj.ct)
+		});
 
-            if (jsonObj.iv) {
-                cipherParams.iv = CryptoJS.enc.Hex.parse(jsonObj.iv)
-            }
-            if (jsonObj.s) {
-                cipherParams.salt = CryptoJS.enc.Hex.parse(jsonObj.s)
-            }
+		// optionally extract iv and salt
+		if (jsonObj.iv) {
+			cipherParams.iv = CryptoJS.enc.Hex.parse(jsonObj.iv)
+		}
+		if (jsonObj.s) {
+			cipherParams.salt = CryptoJS.enc.Hex.parse(jsonObj.s)
+		}
 
-            return cipherParams;
-        }
+		return cipherParams;
+	}
 };
 
 var Sender = {
@@ -208,10 +212,12 @@ var Chat = {
 			message = message.replace(/<\/?[^>]+>/gi, '');
 			this.addMessage(message);
 			$('#notify')[0].play();
-			this.isFocused = false;			
 			this.flashingTitle();
 
-			var notification = new Notification('New message', {'body': "You have got a new message at crypto chat"});
+            if(!this.isFocused)
+			    var notification = new Notification('New message', {'body': "You have got a new message at crypto chat"});
+
+            this.isFocused = false;
 			return;
 		}
 
@@ -255,13 +261,15 @@ var Chat = {
 	},	
 
 	cryptMessage: function(message){
-		message = CryptoJS.Rabbit.encrypt(message, this.secretKey, { format: JsonFormatter }).toString();
+		message = CryptoJS.AES.encrypt(message, this.secretKey, {format: JsonFormatter}).toString();//CryptoJS.Rabbit.encrypt(message, this.secretKey, { format: JsonFormatter }).toString();
 		return message;
 	},
 
 	decryptMessage: function(message) {
-		message = CryptoJS.Rabbit.decrypt(message, this.secretKey, { format: JsonFormatter });
-        message = message.toString(CryptoJS.enc.Utf8);
-        return message;
+		//message = CryptoJS.Rabbit.decrypt(message, this.secretKey, { format: JsonFormatter });
+        //message = message.toString(CryptoJS.enc.Utf8);
+        message = CryptoJS.AES.decrypt(message, this.secretKey, { format: JsonFormatter });
+
+		return message.toString(CryptoJS.enc.Utf8);
 	}
 };
