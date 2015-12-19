@@ -5,14 +5,20 @@
 		<script type="text/javascript" src='/js/chat.js'></script>
 		<script type="text/javascript" src='/js/aes.js'></script>
 		<link href='http://fonts.googleapis.com/css?family=Play' rel='stylesheet' type='text/css'>
+
+		<link href="/vendor/textillate/assets/animate.css" rel="stylesheet">
+		<script src="/vendor/textillate/assets/jquery.fittext.js"></script>
+		<script src="/vendor/textillate/assets/jquery.lettering.js"></script>
+		<script src="/vendor/textillate/jquery.textillate.js"></script>
+
 		<link href='/css/main.css' rel='stylesheet' type='text/css'>
 	</head>	
 	<body>
 	<div style="width: 100%;" align="center">
 		<div style="width: 800px;" align="left">
-			<div class='header'>CryptoChat <sup style='font-size: 12px;'>[ beta ]</sup></div>
+			<div class='header tlt'>CryptoChat</div>
 			<div class='detail'>
-				<div class='description'>Chat id:</div><div class='description' id='chat_id'>test</div>
+				<div class='description'>Channel:</div><div class='description' id='chat_id'>test</div>
 				<div style='clear:both;'></div>
 
 				<div class='description'>Secret key:</div><div class='description' id='secret_key'>*****st</div>
@@ -23,12 +29,28 @@
 			</div>
 			<div class='main'>
 			<div class='messages'></div>
-			<div class='input'>
-				<input type='text' class='current-message'>
+			<div>
+				<input type='text' class='current-message input'>
 			</div>
 		</div>
 		</div>
 	</div>
+
+	<div id="start-form" class="start-form" style="display: none;z-index: 99;">
+		<div id="start-form-label1">Please enter the data and press enter</div>
+		<div style="padding-top: 10px;">
+			<div style="width: 100px;float: left;"  id="start-form-label2">Channel </div>
+			<input type="text" class="input" style="width: 150px;" id="ch">
+		</div>
+		<div>
+			<div style="width: 100px;float: left;"  id="start-form-label3">Secret key </div>
+			<input type="password" class="input" style="width: 150px;" id="k">
+		</div>
+	</div>
+		<script>
+			$('.header').textillate({ in: { effect: 'shake', shuffle: true } });
+		</script>
+		<script src="/js/common.js"></script>
 		<script type="text/javascript">
 			Chat.init('test', 'test');
 
@@ -47,14 +69,6 @@
 			$('body').on('click', function(){
 				Chat.isFocused = true;
 			});
-
-			$('.current-message').blur(function(){
-				setTimeout(function(){ 
-					$('.current-message').focus(); 					
-				}, 50);
-
-				Chat.isFocused = false;
-			}).trigger('blur');
 
 		</script>
 		<audio id='notify'>

@@ -18,17 +18,19 @@ html {
 .system {
 	
 }
-.input {
+
+.current-message {
+	float: left;
+	width: 800px;
 	max-width: 100%;
 	position: fixed;
 	bottom: 10px;
 }
-.current-message {
-	float: left;
+
+.input {
 	display: inline-block;
 	white-space: pre;
 	color: rgb(103, 226, 103);
-	width: 800px;
 	font-size: 20px;
 	font-family: 'Play', monospace;
 	text-align: left;
@@ -54,4 +56,14 @@ html {
 	width: 50px;
 	float: left;
 	margin-left: 10px;
+}
+
+.start-form {
+	font-size: 18px;
+	font-family: 'Play', monospace;
+	color: rgb(103, 226, 103);
+	border: 1px solid rgb(103, 226, 103);
+	margin-top: 5px;
+	padding: 10px;
+	width: 400px;
 }
