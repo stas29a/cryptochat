@@ -54,7 +54,7 @@ $(document).ready(function(){
             $('#start-form').hide();
             setAlwaysFocus('.current-message');
             $('.detail').show();
-            Chat.init($('$ch').val(), $('#k').val());
+            Chat.init($('#ch').val(), $('#k').val());
         }
     });
 });

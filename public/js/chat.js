@@ -38,7 +38,7 @@ var JsonFormatter = {
 	}
 };
 
-var Sender = {
+	var Sender = {
 	init: function(host, handlers){
 	 	this.host = host;
 	 	try{
@@ -147,8 +147,17 @@ var CommandHandler = {
 
 var Chat = {
 	init: function(chatId, secretKey){
-		this.chatId = chatId || this.chatId;
-		this.secretKey = secretKey || this.secretKey;
+
+		if(chatId) {
+			$('#chat_id').html(chatId);
+			this.chatId = chatId;
+		}
+
+		if(secretKey) {
+			this.secretKey = secretKey;
+			$('#secret_key').html('*****' + secretKey.substr(-3,3));
+		}
+
 		this.messagesCount = 0;
 		this.maxMessagesCount = 15;
 		this.host = window.location.hostname;
@@ -158,7 +167,7 @@ var Chat = {
 		{
 			this.addMessage('ERROR! Not seted chat id or secret key');
 			return false;
-		}			
+		}
 
 		Sender.init("ws://"+ this.host +":7777", {
 			onConnectionOpen: function(){
